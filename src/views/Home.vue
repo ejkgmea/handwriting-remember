@@ -29,14 +29,14 @@
                   />
                   <v-switch
                     v-model="english"
-                    label="English"
+                    label="English / 中文"
                     class="pa-2"
                   />
-                  <v-switch
+                  <!-- <v-switch
                     v-model="chinese"
                     label="中文"
                     class="pa-2"
-                  />
+                  /> -->
                 </v-row>
               </template>
 
@@ -90,41 +90,50 @@ export default {
       selected: [],
       headers: [
         { text: 'English', value: 'english' },
-        { text: 'English answer', value: 'englishAnswer' },
-        { text: '中文', value: 'chinese' },
-        { text: '中文答案', value: 'chineseAnswer' }
+        // { text: 'English answer', value: 'englishAnswer' },
+        // { text: '中文答案', value: 'chineseAnswer' },
+        { text: '中文', value: 'chinese' }
       ],
       desserts: [
         {
           english: 'hello',
           englishAnswer: 'hello',
-          chinese: '你好',
-          chineseAnswer: '你好'
+          chineseAnswer: '你好',
+          chinese: '你好'
         },
         {
           english: 'hello',
           englishAnswer: 'hello',
-          chinese: '你好',
-          chineseAnswer: '你好'
+          chineseAnswer: '你好',
+          chinese: '你好'
         },
         {
           english: 'hello',
           englishAnswer: 'hello',
-          chinese: '你好',
-          chineseAnswer: '你好'
+          chineseAnswer: '你好',
+          chinese: '你好'
+        },
+        {
+          english: 'hello',
+          englishAnswer: 'hello',
+          chineseAnswer: '你好',
+          chinese: '你好'
         }
       ]
     }
   },
   watch: {
-    english (val) {
-      if (val === true) {
-        console.log(val)
-      }
-    },
-    chinese (val) {
-      if (val === true) {
-        console.log(val)
+    english (newValue) {
+      if (newValue === true) {
+        this.headers = [
+          { text: 'English', value: 'english' },
+          { text: '你的答案', value: 'chineseAnswer' }
+        ]
+      } else {
+        this.headers = [
+          { text: '中文', value: 'chinese' },
+          { text: 'Your answer', value: 'englishAnswer' }
+        ]
       }
     }
   },
