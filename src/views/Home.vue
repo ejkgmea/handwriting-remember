@@ -10,7 +10,9 @@
           justify="center"
           align="center"
         >
-          <v-col class="text-center">
+          <v-col
+            class="text-center"
+          >
             <v-data-table
               v-model="selected"
               :headers="headers"
@@ -28,27 +30,21 @@
                     class="pa-2"
                   />
                   <v-switch
-                    v-model="english"
+                    v-model="showChinese"
                     label="English / 中文"
                     class="pa-2"
                   />
-                  <!-- <v-switch
-                    v-model="chinese"
-                    label="中文"
+                  <v-switch
+                    v-model="showBoth"
+                    label="Both"
                     class="pa-2"
-                  /> -->
+                  />
                 </v-row>
               </template>
 
-              <template v-slot:item.englishAnswer="{ item }">
+              <template v-slot:item.answer="{ item }">
                 <v-text-field
-                  v-model="item.englishAnswer"
-                />
-              </template>
-
-              <template v-slot:item.chineseAnswer="{ item }">
-                <v-text-field
-                  v-model="item.chineseAnswer"
+                  v-model="item.answer"
                 />
               </template>
             </v-data-table>
@@ -76,74 +72,74 @@ export default {
   components: {
     Navbar
   },
-  props: {
-    source: {
-      type: String,
-      default: ''
-    }
-  },
   data () {
     return {
       singleSelect: false,
-      english: false,
-      chinese: false,
+      showChinese: false,
+      showBoth: false,
       selected: [],
       headers: [
         { text: 'English', value: 'english' },
-        // { text: 'English answer', value: 'englishAnswer' },
-        // { text: '中文答案', value: 'chineseAnswer' },
-        { text: '中文', value: 'chinese' }
+        { text: 'Answer', value: 'answer' }
       ],
       desserts: [
         {
           english: 'hello',
-          englishAnswer: 'hello',
-          chineseAnswer: '你好',
-          chinese: '你好'
+          chinese: '你好',
+          answer: ''
         },
         {
           english: 'hello',
-          englishAnswer: 'hello',
-          chineseAnswer: '你好',
-          chinese: '你好'
+          chinese: '你好',
+          answer: ''
         },
         {
           english: 'hello',
-          englishAnswer: 'hello',
-          chineseAnswer: '你好',
-          chinese: '你好'
+          chinese: '你好',
+          answer: ''
         },
         {
           english: 'hello',
-          englishAnswer: 'hello',
-          chineseAnswer: '你好',
-          chinese: '你好'
+          chinese: '你好',
+          answer: ''
         }
       ]
     }
   },
   watch: {
-    english (newValue) {
+    showChinese (newValue) {
       if (newValue === true) {
         this.headers = [
           { text: 'English', value: 'english' },
-          { text: '你的答案', value: 'chineseAnswer' }
+          { text: 'Answer', value: 'answer' }
         ]
       } else {
         this.headers = [
           { text: '中文', value: 'chinese' },
-          { text: 'Your answer', value: 'englishAnswer' }
+          { text: 'Answer', value: 'answer' }
+        ]
+      }
+    },
+    showBoth (newValue) {
+      if (newValue === true) {
+        this.headers = [
+          { text: 'English', value: 'english' },
+          { text: '中文', value: 'chinese' },
+          { text: 'Answer', value: 'answer' }
+        ]
+      } else if (this.showChinese === true) {
+        this.headers = [
+          { text: 'English', value: 'english' },
+          { text: 'Answer', value: 'answer' }
+        ]
+      } else {
+        this.headers = [
+          { text: '中文', value: 'chinese' },
+          { text: 'Answer', value: 'answer' }
         ]
       }
     }
   },
-  methods: {
-    showEnglish () {
-      this.english = !this.english
-    },
-    showChinese () {
-      this.chinese = !this.chinese
-    }
-  }
+  methods: {}
 }
 </script>
