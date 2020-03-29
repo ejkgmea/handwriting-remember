@@ -140,6 +140,8 @@ export default {
       }
     }
   },
-  methods: {}
+  methods: {
+    // 自动批改实现方法
+  }
 }
 </script>
