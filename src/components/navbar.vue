@@ -48,6 +48,12 @@
 <script>
 export default {
   name: 'Navbar',
+  props: {
+    title: {
+      type: String,
+      default: ''
+    }
+  },
   data: () => ({
     drawer: null
   })

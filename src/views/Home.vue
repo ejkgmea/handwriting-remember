@@ -142,7 +142,7 @@ export default {
   },
   watch: {
     showChinese (newValue) {
-      if (newValue === true) {
+      if (newValue === false) {
         this.headers = [
           { text: 'English', value: 'english' },
           { text: 'Answer', value: 'answer' }
@@ -176,35 +176,28 @@ export default {
   },
   methods: {
     submit () {
+      if (this.showChinese === false) {
+        this.calclateGrade(this.desserts, 'chinese')
+      }
+
+      this.calclateGrade(this.desserts, 'english')
+    },
+    calclateGrade (wordsArray, language) {
       let correctArr = []
       let mistakeArr = []
-      if (this.showChinese === false) {
-        this.desserts.map((value, index) => {
-          if (value.chinese === value.answer) {
-            correctArr.push(index)
-          } else {
-            mistakeArr.push(index)
-            this.desserts[index].error = true
-          }
-        })
 
-        this.correct = correctArr.length
-        this.mistake = mistakeArr.length
-        this.correctRate = this.correct / this.total
-      } else {
-        this.desserts.map((value, index) => {
-          if (value.english === value.answer) {
-            correctArr.push(index)
-          } else {
-            mistakeArr.push(index)
-            this.desserts[index].error = true
-          }
-        })
+      wordsArray.map((value, index) => {
+        if (value[language] === value.answer) {
+          correctArr.push(value.answer)
+        } else {
+          mistakeArr.push(index)
+          this.desserts[index].error = true
+        }
+      })
 
-        this.correct = correctArr.length
-        this.mistake = mistakeArr.length
-        this.correctRate = this.correct / this.total
-      }
+      this.correct = correctArr.length
+      this.mistake = mistakeArr.length
+      this.correctRate = this.correct / this.total
     }
   }
 }
