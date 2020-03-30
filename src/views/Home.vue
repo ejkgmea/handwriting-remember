@@ -65,10 +65,10 @@
         <v-row>
           <v-col>
             <div>
-              <p>总计单词个数：{{ total }}</p>
-              <p>正确个数：{{ correct }}</p>
-              <p>错误个数：{{ mistake }}</p>
-              <p>正确率：{{ correctRate }} %</p>
+              <p>Total: {{ total }}</p>
+              <p>Correct: {{ correct }}</p>
+              <p>Wrong: {{ mistake }}</p>
+              <p>Correct Rate: {{ correctRate }} %</p>
             </div>
           </v-col>
         </v-row>
@@ -111,26 +111,22 @@ export default {
         {
           english: 'insects',
           chinese: '昆虫',
-          answer: '',
-          error: false
+          answer: ''
         },
         {
           english: 'enemies',
           chinese: '敌人',
-          answer: '',
-          error: false
+          answer: ''
         },
         {
           english: 'race',
           chinese: '种族',
-          answer: '',
-          error: false
+          answer: ''
         },
         {
           english: 'devour',
           chinese: '吞食',
-          answer: '',
-          error: false
+          answer: ''
         }
       ]
     }
@@ -177,10 +173,10 @@ export default {
   methods: {
     submit () {
       if (this.showChinese === false) {
-        this.calclateGrade(this.desserts, 'chinese')
+        this.calclateGrade(this.desserts, 'english')
       }
 
-      this.calclateGrade(this.desserts, 'english')
+      this.calclateGrade(this.desserts, 'chinese')
     },
     calclateGrade (wordsArray, language) {
       let correctArr = []
@@ -189,15 +185,16 @@ export default {
       wordsArray.map((value, index) => {
         if (value[language] === value.answer) {
           correctArr.push(value.answer)
+          this.$set(this.desserts[index], 'error', false)
         } else {
-          mistakeArr.push(index)
-          this.desserts[index].error = true
+          mistakeArr.push(value.answer)
+          this.$set(this.desserts[index], 'error', true)
         }
       })
 
       this.correct = correctArr.length
       this.mistake = mistakeArr.length
-      this.correctRate = this.correct / this.total
+      this.correctRate = (this.correct / this.total) * 100
     }
   }
 }
