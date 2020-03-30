@@ -26,7 +26,7 @@
                 <v-row class="mx-2">
                   <v-switch
                     v-model="singleSelect"
-                    label="Single select"
+                    label="Select"
                     class="pa-2"
                   />
                   <v-switch
@@ -45,9 +45,31 @@
               <template v-slot:item.answer="{ item }">
                 <v-text-field
                   v-model="item.answer"
+                  :error="item.error"
                 />
               </template>
             </v-data-table>
+          </v-col>
+        </v-row>
+
+        <v-row
+          justify="center"
+        >
+          <v-col class="text-center">
+            <v-btn @click="submit">
+              Submit
+            </v-btn>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col>
+            <div>
+              <p>总计单词个数：{{ total }}</p>
+              <p>正确个数：{{ correct }}</p>
+              <p>错误个数：{{ mistake }}</p>
+              <p>正确率：{{ correctRate }} %</p>
+            </div>
           </v-col>
         </v-row>
       </v-container>
@@ -78,32 +100,44 @@ export default {
       showChinese: false,
       showBoth: false,
       selected: [],
+      correct: 0,
+      correctRate: 0,
+      mistake: 0,
       headers: [
         { text: 'English', value: 'english' },
         { text: 'Answer', value: 'answer' }
       ],
       desserts: [
         {
-          english: 'hello',
-          chinese: '你好',
-          answer: ''
+          english: 'insects',
+          chinese: '昆虫',
+          answer: '',
+          error: false
         },
         {
-          english: 'hello',
-          chinese: '你好',
-          answer: ''
+          english: 'enemies',
+          chinese: '敌人',
+          answer: '',
+          error: false
         },
         {
-          english: 'hello',
-          chinese: '你好',
-          answer: ''
+          english: 'race',
+          chinese: '种族',
+          answer: '',
+          error: false
         },
         {
-          english: 'hello',
-          chinese: '你好',
-          answer: ''
+          english: 'devour',
+          chinese: '吞食',
+          answer: '',
+          error: false
         }
       ]
+    }
+  },
+  computed: {
+    total () {
+      return this.desserts.length > 0 ? this.desserts.length : 0
     }
   },
   watch: {
@@ -141,7 +175,37 @@ export default {
     }
   },
   methods: {
-    // 自动批改实现方法
+    submit () {
+      let correctArr = []
+      let mistakeArr = []
+      if (this.showChinese === false) {
+        this.desserts.map((value, index) => {
+          if (value.chinese === value.answer) {
+            correctArr.push(index)
+          } else {
+            mistakeArr.push(index)
+            this.desserts[index].error = true
+          }
+        })
+
+        this.correct = correctArr.length
+        this.mistake = mistakeArr.length
+        this.correctRate = this.correct / this.total
+      } else {
+        this.desserts.map((value, index) => {
+          if (value.english === value.answer) {
+            correctArr.push(index)
+          } else {
+            mistakeArr.push(index)
+            this.desserts[index].error = true
+          }
+        })
+
+        this.correct = correctArr.length
+        this.mistake = mistakeArr.length
+        this.correctRate = this.correct / this.total
+      }
+    }
   }
 }
 </script>
