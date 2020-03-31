@@ -81,6 +81,7 @@
 
 <script>
 import Navbar from '@/components/navbar'
+import FFM from '@/components/wordslist/01FindingFossilMan'
 
 export default {
   name: 'Home',
@@ -100,28 +101,7 @@ export default {
         { text: 'English', value: 'english' },
         { text: 'Answer', value: 'answer' }
       ],
-      desserts: [
-        {
-          english: 'insects',
-          chinese: '昆虫',
-          answer: ''
-        },
-        {
-          english: 'enemies',
-          chinese: '敌人',
-          answer: ''
-        },
-        {
-          english: 'race',
-          chinese: '种族',
-          answer: ''
-        },
-        {
-          english: 'devour',
-          chinese: '吞食',
-          answer: ''
-        }
-      ]
+      desserts: [...FFM]
     }
   },
   computed: {
@@ -187,7 +167,7 @@ export default {
 
       this.correct = correctArr.length
       this.mistake = mistakeArr.length
-      this.correctRate = (this.correct / this.total) * 100
+      this.correctRate = ((this.correct / this.total) * 100).toFixed(2)
     }
   }
 }
