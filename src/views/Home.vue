@@ -17,18 +17,11 @@
               v-model="selected"
               :headers="headers"
               :items="desserts"
-              :single-select="singleSelect"
               item-key="index"
-              show-select
               class="elevation-1"
             >
               <template v-slot:top>
                 <v-row class="mx-2">
-                  <v-switch
-                    v-model="singleSelect"
-                    label="Select"
-                    class="pa-2"
-                  />
                   <v-switch
                     v-model="showChinese"
                     label="English / 中文"
@@ -159,12 +152,12 @@ export default {
         ]
       } else if (this.showChinese === true) {
         this.headers = [
-          { text: 'English', value: 'english' },
+          { text: '中文', value: 'chinese' },
           { text: 'Answer', value: 'answer' }
         ]
       } else {
         this.headers = [
-          { text: '中文', value: 'chinese' },
+          { text: 'English', value: 'english' },
           { text: 'Answer', value: 'answer' }
         ]
       }
@@ -173,10 +166,10 @@ export default {
   methods: {
     submit () {
       if (this.showChinese === false) {
+        this.calclateGrade(this.desserts, 'chinese')
+      } else {
         this.calclateGrade(this.desserts, 'english')
       }
-
-      this.calclateGrade(this.desserts, 'chinese')
     },
     calclateGrade (wordsArray, language) {
       let correctArr = []
