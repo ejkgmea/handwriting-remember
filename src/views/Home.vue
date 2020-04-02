@@ -82,6 +82,7 @@
 <script>
 import Navbar from '@/components/navbar'
 import FFM from '@/components/wordslist/01FindingFossilMan'
+import _ from 'lodash'
 
 export default {
   name: 'Home',
@@ -142,6 +143,9 @@ export default {
         ]
       }
     }
+  },
+  created () {
+    console.log(_.isEmpty(null))
   },
   methods: {
     submit () {
